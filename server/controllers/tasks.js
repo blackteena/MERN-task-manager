@@ -1,17 +1,11 @@
-import express from 'express'
-
-import authMiddleware from '../middlewares/auth.js'
 import Task from '../models/task.js'
-import mongoose from 'mongoose'
 
-const router = express.Router()
-
-router.get('/', authMiddleware, async (req, res) => {
+export const getTasksController = async (req, res) => {
     const tasks = await Task.find({ user: req.user.id })
     res.json({ tasks })
-})
+}
 
-router.post('/', authMiddleware, async (req, res) => {
+export const createTaskController=async (req, res) => {
     const { title } = req.body
     try {
         const newTask = new Task({
@@ -26,9 +20,9 @@ router.post('/', authMiddleware, async (req, res) => {
             message: 'Server error'
         })
     }
-})
+}
 
-router.put('/:id', authMiddleware, async (req, res) => {
+export const updateTaskController=async (req, res) => {
     const { title, completed } = req.body
     const taskId = req.params.id
     try {
@@ -41,7 +35,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
         task.title = title ?? task.title
         task.completed = completed ?? task.completed
         await task.save()
-        return res.json(task)
+        return res.json({task})
     }
     catch (err) {
         console.log(err)
@@ -49,9 +43,9 @@ router.put('/:id', authMiddleware, async (req, res) => {
             message: 'Server error'
         })
     }
-})
+}
 
-router.delete('/:id', authMiddleware, async (req, res) => {
+export const deleteTaskController=async (req, res) => {
     try {
         const task = await Task.findOneAndDelete({ _id: req.params.id, user: req.user.id })
         if(!task){
@@ -62,8 +56,4 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     catch (err) {
         return res.status(500).json({message:'Server error'})
     }
-})
-
-export default router
-
-
+}

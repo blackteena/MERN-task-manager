@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 
 import authRoutes from './routes/auth.js'
-import taskRoutes from './routes/task.js'
+import taskRoutes from './routes/tasks.js'
 
 dotenv.config()
 
@@ -21,5 +21,5 @@ app.use('/api/auth', authRoutes);
     
 app.use('/api/tasks', taskRoutes)
 
-app.listen(port||4200,()=>console.log(`App listening on port ${port}`))
+app.listen(port||4200,()=>console.log(`App listening by port ${port}`))
 
