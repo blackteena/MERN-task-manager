@@ -4,6 +4,7 @@ import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import api from '../api'
 
 const schema = zod.object({
   email: zod.string().email(),
@@ -23,7 +24,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post('http://localhost:4200/api/auth/register', data)
+      const res = await api.post('/auth/register', data)
       localStorage.setItem('token', res.data.token)
       navigate('/tasks')
     }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import api from '../api'
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([])
@@ -19,7 +20,7 @@ const Tasks = () => {
         return
       }
       const token = localStorage.getItem('token')
-      const res = await axios.post('http://localhost:4200/api/tasks', { title },
+      const res = await api.post('/tasks', { title },
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -36,7 +37,7 @@ const Tasks = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      await axios.delete(`http://localhost:4200/api/tasks/${id}`,
+      await api.delete(`/tasks/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -53,7 +54,7 @@ const Tasks = () => {
   const handleComplete = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.put(`http://localhost:4200/api/tasks/${id}`,
+      const res = await api.put(`/tasks/${id}`,
         {
           completed: true
         },
@@ -76,7 +77,7 @@ const Tasks = () => {
     e.preventDefault()
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.put(`http://localhost:4200/api/tasks/${id}`,
+      const res = await api.put(`/tasks/${id}`,
         {
           title: editTask
         },
@@ -103,7 +104,7 @@ const Tasks = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token')
-        const res = await axios.get('http://localhost:4200/api/tasks', {
+        const res = await api.get('/tasks', {
           headers: {
             Authorization: `Bearer ${token}`
           }
