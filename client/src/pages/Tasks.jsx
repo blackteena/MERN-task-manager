@@ -97,7 +97,7 @@ const Tasks = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    navigate('/login')
+    navigate('/')
   }
 
   useEffect(() => {
